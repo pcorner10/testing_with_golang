@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 	"strings"
@@ -16,7 +17,7 @@ func main() {
 	doneChan := make(chan bool)
 
 	// Iniciar una goroutine para leer el input del usuario y correr el programa
-	go readUserInput(doneChan)
+	go readUserInput(os.Stdin, doneChan)
 
 	// bloquear hasta que doneChan reciba un valor
 	<-doneChan
@@ -29,8 +30,8 @@ func main() {
 
 }
 
-func readUserInput(doneChan chan bool) {
-	scanner := bufio.NewScanner(os.Stdin)
+func readUserInput(in io.Reader, doneChan chan bool) {
+	scanner := bufio.NewScanner(in)
 
 	for {
 		res, done := checkNumbers(scanner)
@@ -66,7 +67,7 @@ func checkNumbers(scanner *bufio.Scanner) (string, bool) {
 
 }
 
-func intro()  {
+func intro() {
 	fmt.Println("Is it Prime?")
 	fmt.Println("------------")
 	fmt.Println("Introduce un número y te diremos si es un primo o no. Usa 'q' para salir.")
