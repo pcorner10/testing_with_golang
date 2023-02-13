@@ -15,7 +15,7 @@ func main() {
 	mux := app.routes()
 
 	// print out a message
-	log.Panicln("Starting server on port 8080...")
+	log.Println("Starting server on port 8080...")
 
 	// start the server
 	err := http.ListenAndServe(":8080", mux)
